@@ -1,16 +1,20 @@
 <template lang="html">
   <div>
-    <Navbar/>
+    <Userbar/>
+    <Profile/>
     <Googlemap/>
+
   </div>
 </template>
 
 <script>
-import Navbar from '@/components/Index/Navbar'
+import Userbar from '@/components/User/Userbar'
+import Profile from '@/components/User/Profile'
 import Googlemap from '@/components/Index/Googlemap'
 export default {
   components: {
-    Navbar,
+    Userbar,
+    Profile,
     Googlemap
   }
 }

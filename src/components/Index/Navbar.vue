@@ -1,13 +1,13 @@
 <template lang="html">
   <v-toolbar>
-   <v-spacer>
-     <v-btn flat @click="topage('/')"><v-icon x-large>home</v-icon></v-btn>
-   </v-spacer>
-   <v-toolbar-items>
-     <v-btn flat @click="topage('/login')">Log IN</v-btn>
-     <v-btn flat>Register</v-btn>
-   </v-toolbar-items>
- </v-toolbar>
+    <v-spacer>
+      <v-btn flat @click="toPage('/')"><v-icon x-large>home</v-icon></v-btn>
+    </v-spacer>
+    <v-toolbar-items>
+      <v-btn flat @click="toPage('/login')">Log IN</v-btn>
+      <v-btn flat>Register</v-btn>
+    </v-toolbar-items>
+  </v-toolbar>
 </template>
 
 <script>
