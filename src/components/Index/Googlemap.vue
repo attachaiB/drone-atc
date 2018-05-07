@@ -7,8 +7,8 @@ export default {
   methods: {
     initMap () {
       var map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: -34.397, lng: 150.644},
-        zoom: 8
+        center: {lat: 13.748335, lng: 100.567150},
+        zoom: 6
       })
     }
   },
@@ -27,10 +27,8 @@ export default {
 
 <style lang="css" scoped>
 #map {
-        height: 100%;
-      }
-#myMap {
-  height:300px;
+  margin-top: 20px;
+  height:500px;
   width: 100%;
 }
 </style>
