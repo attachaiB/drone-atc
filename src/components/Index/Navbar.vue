@@ -5,7 +5,7 @@
     </v-spacer>
     <v-toolbar-items>
       <v-btn flat @click="toPage('/login')">Log IN</v-btn>
-      <v-btn flat>Register</v-btn>
+      <v-btn flat @click="toPage('/regis')">Register</v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>

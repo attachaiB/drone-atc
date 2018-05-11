@@ -1,18 +1,18 @@
 <template lang="html">
   <div>
     <Navbar/>
-    <Loginform/>
+    <Regisform/>
 
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Index/Navbar'
-import Loginform from '@/components/Authen/Loginform'
+import Regisform from '@/components/Authen/Regisform'
 export default {
   components: {
     Navbar,
-    Loginform
+    Regisform
   },
   methods: {
     checkCookie () {

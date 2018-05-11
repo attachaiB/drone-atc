@@ -4,9 +4,16 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Vuetify from 'vuetify'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 import 'vuetify/dist/vuetify.min.css'
+import VueCookies from 'vue-cookies'
+import VueSweetAlert from 'vue-sweetalert'
 
 Vue.use(Vuetify)
+Vue.use(VueAxios, axios)
+Vue.use(VueCookies)
+Vue.use(VueSweetAlert)
 
 Vue.config.productionTip = false
 

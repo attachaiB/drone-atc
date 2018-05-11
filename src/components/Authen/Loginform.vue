@@ -11,13 +11,13 @@
               </v-toolbar>
               <v-card-text>
                 <v-form>
-                  <v-text-field prepend-icon="person" name="login" label="Login" type="text"></v-text-field>
-                  <v-text-field prepend-icon="lock" name="password" label="Password" id="password" type="password"></v-text-field>
+                  <v-text-field v-model="username" prepend-icon="person" name="login" label="Login" type="text"></v-text-field>
+                  <v-text-field v-model="password" prepend-icon="lock" name="password" label="Password" id="password" type="password"></v-text-field>
                 </v-form>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="grey darken-2" dark>Login</v-btn>
+                <v-btn color="grey darken-2" dark v-on:click="login">Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -30,10 +30,38 @@
 <script>
 export default {
   data: () => ({
-    drawer: null
+    drawer: null,
+    username: '',
+    password: ''
   }),
   props: {
     source: String
+  },
+  methods: {
+    login () {
+      var data = {
+        'username': this.username,
+        'password': this.password
+      }
+      this.axios.post('http://127.0.0.1:5000' + '/login', data).then((response) => {
+        // var result = JSON.parse(response.data)
+        var result = response.data
+        if (response.status === 200) {
+          if (result.status === 'success') {
+            if (result.info.permission === 'Admin') {
+              var enper = btoa(result.info.permission)
+              this.$cookies.set('username', enper, null, '/', 'localhost')
+              window.location = '/adpage'
+            }
+            if (result.info.permission === 'User') {
+              window.location = '/user'
+            }
+          } else {
+            this.$swal('ผิดพลาด !', 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง', 'error')
+          }
+        }
+      })
+    }
   }
 }
 </script>

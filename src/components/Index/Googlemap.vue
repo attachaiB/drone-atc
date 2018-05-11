@@ -6,7 +6,7 @@
 export default {
   methods: {
     initMap () {
-      var map = new google.maps.Map(document.getElementById('map'), {
+      return new google.maps.Map(document.getElementById('map'), {
         center: {lat: 13.748335, lng: 100.567150},
         zoom: 6
       })
@@ -14,13 +14,6 @@ export default {
   },
   mounted () {
     this.initMap()
-    // var map
-    // function initMap () {
-    //   map = new google.maps.Map(document.getElementById('map'), {
-    //     center: {lat: -34.397, lng: 150.644},
-    //     zoom: 8
-    //   })
-    // }
   }
 }
 </script>
