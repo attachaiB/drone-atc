@@ -66,13 +66,37 @@
 export default {
   data: () => ({
     dialog: false,
-    headers: [
-      { align: 'center', text: 'Name', value: 'name' },
-      { align: 'center', text: 'Drone ID', value: 'droneID' },
-      { align: 'center', text: 'Username', value: 'username' },
-      { align: 'center', text: 'Created at', value: 'created_at' },
-      { align: 'center', text: 'Updated at', value: 'updated_at' },
-      { align: 'center', text: 'Actions', value: 'name', sortable: false }
+    headers: [{
+        align: 'center',
+        text: 'Name',
+        value: 'name'
+      },
+      {
+        align: 'center',
+        text: 'Drone ID',
+        value: 'droneID'
+      },
+      {
+        align: 'center',
+        text: 'Username',
+        value: 'username'
+      },
+      {
+        align: 'center',
+        text: 'Created at',
+        value: 'created_at'
+      },
+      {
+        align: 'center',
+        text: 'Updated at',
+        value: 'updated_at'
+      },
+      {
+        align: 'center',
+        text: 'Actions',
+        value: 'name',
+        sortable: false
+      }
     ],
     items: [],
     editedIndex: -1,
@@ -104,14 +128,13 @@ export default {
     }
   },
 
-  created () {
+  created() {
     this.initialize()
   },
 
   methods: {
     initialize () {
-      this.items = [
-        {
+      this.items = [{
           name: 'Frozen Yogurt',
           droneID: 159,
           username: 'Yogurt',

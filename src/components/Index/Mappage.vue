@@ -20,10 +20,10 @@ export default {
   methods: {
     checkCookie () {
       var enper = atob(this.$cookies.get('username'))
-      if (enper === 'Admin') {
+      if (this.$cookies.get('username') == null) {
+        window.location = '/'
+      } else if (enper === 'Admin') {
         window.location = '/adpage'
-      } else if (enper === 'User') {
-        window.location = '/user'
       }
     }
   },

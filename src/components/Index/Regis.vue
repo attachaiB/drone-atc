@@ -24,7 +24,7 @@ export default {
       }
     }
   },
-  created: function () {
+  mounted () {
     this.checkCookie()
   }
 }

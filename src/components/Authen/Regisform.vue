@@ -92,7 +92,7 @@
             @blur="$v.checkbox.$touch()"
             ></v-checkbox>
 
-            <v-btn v-on:click="regis">submit</v-btn>
+            <v-btn @click="submit">submit</v-btn>
             <v-btn @click="clear">clear</v-btn>
           </form>
         </v-card>
@@ -207,20 +207,7 @@ export default {
   methods: {
     submit () {
       this.$v.$touch()
-    },
-    clear () {
-      this.$v.$reset()
-      this.name = ''
-      this.surname = ''
-      this.person = ''
-      this.username = ''
-      this.password = ''
-      this.email = ''
-      this.comreg = ''
-      this.company = ''
-      this.checkbox = false
-    },
-    regis () {
+      this.$swal('สำเร็จ !', 'ทำรายการสำเร็จ', 'success')
       var data = {
         'name': this.name,
         'surname': this.surname,
@@ -235,15 +222,26 @@ export default {
       this.axios.post('http://127.0.0.1:5000' + '/regis', data).then((response) => {
         var result = response.data
         if (response.status === 200) {
-          console.log(result)
           if (result.status === 'success') {
-            alert('success')
             window.location = '/login'
           } else {
-            alert('fail')
+            this.$swal('ผิดพลาด !', 'ทำรายการผิดพลาด', 'error')
           }
         }
       })
+    },
+    clear () {
+      this.$v.$reset()
+      this.name = ''
+      this.surname = ''
+      this.person = ''
+      this.username = ''
+      this.password = ''
+      this.email = ''
+      this.comreg = ''
+      this.company = ''
+      this.checkbox = false
+      this.phone = ''
     }
   }
 }

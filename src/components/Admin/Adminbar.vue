@@ -27,13 +27,13 @@ export default {
       this.$router.push(url)
     },
     logout () {
-      this.$cookies.remove('token')
+      this.$cookies.remove('username')
       window.location = '/'
     },
     checkCookie () {
       var enper = atob(this.$cookies.get('username'))
-      if (enper === 'Admin') {
-        window.location = '/adpage'
+      if (this.$cookies.get('username') == null) {
+        window.location = '/'
       } else if (enper === 'User') {
         window.location = '/user'
       }
