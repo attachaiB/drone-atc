@@ -16,19 +16,6 @@ export default {
     Userbar,
     Profile,
     Googlemap
-  },
-  methods: {
-    checkCookie () {
-      var enper = atob(this.$cookies.get('username'))
-      if (this.$cookies.get('username') == null) {
-        window.location = '/'
-      } else if (enper === 'Admin') {
-        window.location = '/adpage'
-      }
-    }
-  },
-  created: function () {
-    this.checkCookie()
   }
 }
 </script>

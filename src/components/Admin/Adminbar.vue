@@ -29,18 +29,7 @@ export default {
     logout () {
       this.$cookies.remove('username')
       window.location = '/'
-    },
-    checkCookie () {
-      var enper = atob(this.$cookies.get('username'))
-      if (this.$cookies.get('username') == null) {
-        window.location = '/'
-      } else if (enper === 'User') {
-        window.location = '/user'
-      }
     }
-  },
-  created: function () {
-    this.checkCookie()
   }
 }
 </script>

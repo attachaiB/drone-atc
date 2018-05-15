@@ -13,7 +13,7 @@
                 <v-text-field label="Name" v-model="editedItem.name"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 md4>
-                <v-text-field label="Drone ID" v-model="editedItem.droneID"></v-text-field>
+                <v-text-field label="Drone ID" v-model="drone_id"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 md4>
                 <v-text-field label="username" v-model="editedItem.username"></v-text-field>
@@ -42,7 +42,7 @@
     >
     <template slot="items" slot-scope="props">
       <td>{{ props.item.name }}</td>
-      <td class="text-xs-center">{{ props.item.droneID }}</td>
+      <td class="text-xs-center">{{ props.item.drone_id }}</td>
       <td class="text-xs-center">{{ props.item.username }}</td>
       <td class="text-xs-center">{{ props.item.created_at }}</td>
       <td class="text-xs-center">{{ props.item.updated_at }}</td>
@@ -65,51 +65,51 @@
 <script>
 export default {
   data: () => ({
+    drone_id: '',
     dialog: false,
     headers: [{
-        align: 'center',
-        text: 'Name',
-        value: 'name'
-      },
-      {
-        align: 'center',
-        text: 'Drone ID',
-        value: 'droneID'
-      },
-      {
-        align: 'center',
-        text: 'Username',
-        value: 'username'
-      },
-      {
-        align: 'center',
-        text: 'Created at',
-        value: 'created_at'
-      },
-      {
-        align: 'center',
-        text: 'Updated at',
-        value: 'updated_at'
-      },
-      {
-        align: 'center',
-        text: 'Actions',
-        value: 'name',
-        sortable: false
-      }
+      align: 'center',
+      text: 'Name',
+      value: 'name'
+    },
+    {
+      align: 'center',
+      text: 'Drone ID',
+      value: 'drone_id'
+    },
+    {
+      align: 'center',
+      text: 'Username',
+      value: 'username'
+    },
+    {
+      align: 'center',
+      text: 'Created at',
+      value: 'created_at'
+    },
+    {
+      align: 'center',
+      text: 'Updated at',
+      value: 'updated_at'
+    },
+    {
+      align: 'center',
+      text: 'Actions',
+      value: 'name',
+      sortable: false
+    }
     ],
     items: [],
     editedIndex: -1,
     editedItem: {
       name: '',
-      droneID: 0,
       username: '',
       created_at: 0,
       updated_at: 0
     },
     defaultItem: {
       name: '',
-      droneID: 0,
+      drone_id: 0,
       username: '',
       created_at: 0,
       updated_at: 0
@@ -128,41 +128,19 @@ export default {
     }
   },
 
-  created() {
+  created () {
     this.initialize()
   },
 
   methods: {
     initialize () {
-      this.items = [{
-          name: 'Frozen Yogurt',
-          droneID: 159,
-          username: 'Yogurt',
-          created_at: '2018-05-04 16:00:00',
-          updated_at: '2018-05-04 16:00:00'
-        },
-        {
-          name: 'Ice cream sandwich',
-          droneID: 237,
-          username: 'sandwich',
-          created_at: '2018-05-04 16:00:00',
-          updated_at: '2018-05-04 16:00:00'
-        },
-        {
-          name: 'Eclair',
-          droneID: 262,
-          username: 'Eclair',
-          created_at: '2018-05-04 16:00:00',
-          updated_at: '2018-05-04 16:00:00'
-        },
-        {
-          name: 'Cupcake',
-          droneID: 305,
-          username: 'Cupcake',
-          created_at: '2018-05-04 16:00:00',
-          updated_at: '2018-05-04 16:00:00'
-        }
-      ]
+      var data = {
+        'drone_id': this.drone_id
+      }
+      this.axios.post('http://127.0.0.1:5000' + '/getUser', data).then((response) => {
+        var result = response.data
+        this.items = result
+      })
     },
 
     editItem (item) {
@@ -172,8 +150,38 @@ export default {
     },
 
     deleteItem (item) {
+      var data = {
+        'drone_id': item.drone_id
+      }
       const index = this.items.indexOf(item)
-      confirm('Are you sure you want to delete this item?') && this.items.splice(index, 1)
+      this.$swal({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (!result.value) {
+          this.axios.post('http://127.0.0.1:5000' + '/delUser', { data: data }).then((response) => {
+            var result = response.data
+            if (response.status === 200) {
+              if (result.status === 'success') {
+                this.$swal(
+                  'Deleted!',
+                  'Your file has been deleted.',
+                  'success'
+                ) && this.items.splice(index, 1)
+              } else {
+                this.$swal('ผิดพลาด !', 'ทำรายการผิดพลาด', 'error')
+              }
+            } else {
+              alert(3)
+            }
+          })
+        }
+      })
     },
 
     close () {
