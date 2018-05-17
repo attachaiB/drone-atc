@@ -48,7 +48,8 @@ export default {
         var result = response.data
         if (response.status === 200) {
           if (result.status === 'success') {
-            if (result.info.activated === '0') {
+            alert(result.info.activated)
+            if (result.info.activated === 0) {
               this.$swal('ผิดพลาด !', 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง', 'error')
             } else {
               var enper
