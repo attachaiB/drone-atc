@@ -2,7 +2,6 @@
   <v-container grid-list-md>
     <v-layout row wrap>
       <v-flex xs3>
-
       </v-flex>
       <v-flex xs3>
         <v-card>

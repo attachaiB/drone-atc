@@ -1,7 +1,7 @@
 <template lang="html">
   <div>
     <v-dialog v-model="dialog" max-width="500px">
-      <v-btn color="primary" dark slot="activator" class="mb-2">New Item</v-btn>
+      <v-btn color="primary" dark slot="activator" class="mb-2">Add Admin</v-btn>
       <v-card>
         <v-card-title>
           <span class="headline">{{ formTitle }}</span>
@@ -13,16 +13,28 @@
                 <v-text-field label="Name" v-model="editedItem.name"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 md4>
-                <v-text-field label="Drone ID" v-model="drone_id"></v-text-field>
+                <v-text-field label="Surname" v-model="editedItem.surname"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 md4>
+                <v-text-field label="Person ID" v-model="editedItem.person_id"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 md4>
                 <v-text-field label="username" v-model="editedItem.username"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 md4>
-                <v-text-field label="Created at" v-model="editedItem.created_at"></v-text-field>
+                <v-text-field label="Password" v-model="editedItem.password"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 md4>
-                <v-text-field label="Updated at" v-model="editedItem.updated_at"></v-text-field>
+                <v-text-field label="รหัสผลิตภัณฑ์" v-model="editedItem.comreg_num"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 md4>
+                <v-text-field label="Company Name" v-model="editedItem.company_name"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 md4>
+                <v-text-field label="E-Mail" v-model="editedItem.email"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 md4>
+                <v-text-field label="Phone" v-model="editedItem.phone"></v-text-field>
               </v-flex>
             </v-layout>
           </v-container>
@@ -41,11 +53,12 @@
     class="elevation-1"
     >
     <template slot="items" slot-scope="props">
-      <td>{{ props.item.name }}</td>
+      <td class="text-xs-center">{{ props.item.name }}</td>
+      <td class="text-xs-center">{{ props.item.surname }}</td>
       <td class="text-xs-center">{{ props.item.drone_id }}</td>
       <td class="text-xs-center">{{ props.item.username }}</td>
-      <td class="text-xs-center">{{ props.item.created_at }}</td>
-      <td class="text-xs-center">{{ props.item.updated_at }}</td>
+      <td class="text-xs-center">{{ props.item.comreg_num }}</td>
+      <td class="text-xs-center">{{ props.item.company_name }}</td>
       <td class="justify-center layout px-0">
         <v-btn icon class="mx-0" @click="editItem(props.item)">
           <v-icon color="teal">edit</v-icon>
@@ -74,6 +87,11 @@ export default {
     },
     {
       align: 'center',
+      text: 'Surname',
+      value: 'surname'
+    },
+    {
+      align: 'center',
       text: 'Drone ID',
       value: 'drone_id'
     },
@@ -84,18 +102,18 @@ export default {
     },
     {
       align: 'center',
-      text: 'Created at',
-      value: 'created_at'
+      text: 'รหัสผลิตภัณฑ์',
+      value: 'comreg_num'
     },
     {
       align: 'center',
-      text: 'Updated at',
-      value: 'updated_at'
+      text: 'Company Name',
+      value: 'company_name'
     },
     {
       align: 'center',
       text: 'Actions',
-      value: 'name',
+      value: 'actions',
       sortable: false
     }
     ],
@@ -104,21 +122,26 @@ export default {
     editedItem: {
       name: '',
       username: '',
-      created_at: 0,
-      updated_at: 0
+      surname: '',
+      password: '',
+      person_id: '',
+      comreg_num: '',
+      company_name: '',
+      email: '',
+      phone: ''
     },
     defaultItem: {
       name: '',
-      drone_id: 0,
       username: '',
-      created_at: 0,
-      updated_at: 0
+      surname: '',
+      comreg_num: '',
+      company_name: ''
     }
   }),
 
   computed: {
     formTitle () {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+      return this.editedIndex === -1 ? 'Add Admin' : 'Edit Item'
     }
   },
 
@@ -134,10 +157,11 @@ export default {
 
   methods: {
     initialize () {
-      var data = {
-        'drone_id': this.drone_id
+      var id = atob(this.$cookies.get('userdrone'))
+      var myid = {
+        'did': id
       }
-      this.axios.post('http://127.0.0.1:5000' + '/getUser', data).then((response) => {
+      this.axios.post('http://127.0.0.1:5000' + '/getUser', myid).then((response) => {
         var result = response.data
         this.items = result
       })
@@ -193,6 +217,27 @@ export default {
     },
 
     save () {
+      var data = {
+        'name': this.editedItem.name,
+        'username': this.editedItem.username,
+        'surname': this.editedItem.surname,
+        'password': this.editedItem.password,
+        'person_id': this.editedItem.person_id,
+        'comreg_num': this.editedItem.comreg_num,
+        'company_name': this.editedItem.company_name,
+        'email': this.editedItem.email,
+        'phone': this.editedItem.phone
+      }
+      this.axios.post('http://127.0.0.1:5000' + '/addAdmin', data).then((response) => {
+        var result = response.data
+        if (response.status === 200) {
+          if (result.status === 'success') {
+            this.$swal('สำเร็จ !', 'ทำรายการสำเร็จ', 'success')
+          } else {
+            this.$swal('ผิดพลาด !', 'ทำรายการผิดพลาด', 'error')
+          }
+        }
+      })
       if (this.editedIndex > -1) {
         Object.assign(this.items[this.editedIndex], this.editedItem)
       } else {

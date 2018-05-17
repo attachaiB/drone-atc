@@ -223,7 +223,7 @@ export default {
         var result = response.data
         if (response.status === 200) {
           if (result.status === 'success') {
-            window.location = '/login'
+            this.$router.push('/login')
           } else {
             this.$swal('ผิดพลาด !', 'ทำรายการผิดพลาด', 'error')
           }

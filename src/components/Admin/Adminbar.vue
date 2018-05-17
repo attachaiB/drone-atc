@@ -27,8 +27,9 @@ export default {
       this.$router.push(url)
     },
     logout () {
-      this.$cookies.remove('username')
-      window.location = '/'
+      this.$cookies.remove('usertype')
+      this.$cookies.remove('userdrone')
+      this.$router.push('/')
     }
   }
 }

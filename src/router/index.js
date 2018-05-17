@@ -23,8 +23,8 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((x) => x.meta.requiresAuthAdmin)) {
-    if (window.$cookies.isKey('username')) {
-      if (atob(window.$cookies.get('username')).replace(/"/g, '') !== 'Admin') {
+    if (window.$cookies.isKey('usertype')) {
+      if (atob(window.$cookies.get('usertype')).replace(/"/g, '') !== 'Admin') {
         next({ path: '/' })
       } else {
         next()
@@ -39,8 +39,8 @@ router.beforeEach((to, from, next) => {
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((x) => x.meta.requiresAuthUser)) {
-    if (window.$cookies.isKey('username')) {
-      if (atob(window.$cookies.get('username')).replace(/"/g, '') !== 'User') {
+    if (window.$cookies.isKey('usertype')) {
+      if (atob(window.$cookies.get('usertype')).replace(/"/g, '') !== 'User') {
         next({ path: '/' })
       } else {
         next()

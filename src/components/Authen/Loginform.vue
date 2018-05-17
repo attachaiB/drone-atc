@@ -48,13 +48,21 @@ export default {
         var result = response.data
         if (response.status === 200) {
           if (result.status === 'success') {
-            if (result.info.permission === 'Admin') {
-              var enper = btoa(result.info.permission)
-              this.$cookies.set('username', enper, null, '/', 'localhost')
-              window.location = '/adpage'
-            }
-            if (result.info.permission === 'User') {
-              window.location = '/user'
+            if (result.info.activated === '0') {
+              this.$swal('ผิดพลาด !', 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง', 'error')
+            } else {
+              var enper
+              var did = btoa(String(result.info.drone_id))
+              this.$cookies.set('userdrone', did, null, '/', 'localhost')
+              if (result.info.permission === 'Admin') {
+                enper = btoa(result.info.permission)
+                this.$cookies.set('usertype', enper, null, '/', 'localhost')
+                this.$router.push('/adpage')
+              } else if (result.info.permission === 'User') {
+                enper = btoa(result.info.permission)
+                this.$cookies.set('usertype', enper, null, '/', 'localhost')
+                this.$router.push('/user')
+              }
             }
           } else {
             this.$swal('ผิดพลาด !', 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง', 'error')
