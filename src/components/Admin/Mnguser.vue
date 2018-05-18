@@ -200,8 +200,6 @@ export default {
               } else {
                 this.$swal('ผิดพลาด !', 'ทำรายการผิดพลาด', 'error')
               }
-            } else {
-              alert(3)
             }
           })
         }
